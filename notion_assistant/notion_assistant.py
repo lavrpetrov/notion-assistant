@@ -2,6 +2,8 @@
 
 
 from pathlib import Path
+from datetime import datetime
+from time import sleep
 from notion.client import NotionClient
 from notion.block.basic import *
 
@@ -14,18 +16,19 @@ token = token_path.read_text().strip()
 client = NotionClient(token_v2=token)
 
 # Replace this URL with the URL of the page you want to edit
-block_url = "https://www.notion.so/Such-deals2-44f62260b7894844ac72a4f3a182bb7c"
+block_url = "https://www.notion.so/Test_Page-a15d04aee2dc49a88ca287e30ed71cb8"
 page = client.get_block(block_url)
 
+current_time = datetime.now()
 
-url = page.get_browseable_url
-print(url)
+while True:
+    subPage = page.children.add_new(TextBlock, title = f"**Note from {current_time.strftime('%d %b %Y / %H:%M')}:**")
+    sleep(10)
 
-subPage = page.children.add_new(PageBlock, title = 'new_page')
 
-for child in page.children:
-    print(f"Parent of {child.id} is {child.parent.id}")
+# for child in page.children:
+#     print(f"Parent of {child.id} is {child.parent.id}")
 
-print(f"Parent of {page.id} is {page.parent.id}")
+# print(f"Parent of {page.id} is {page.parent.id}")
 
-print(page.get())
+# print(page.get())
