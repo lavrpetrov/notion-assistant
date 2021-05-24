@@ -1,1 +1,3 @@
-# notion-assistant
+# Notion-assistant
+
+Bot is scanning pages from Notion and converting specific blocks into tasks, projects etc.
