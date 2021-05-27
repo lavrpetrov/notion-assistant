@@ -2,6 +2,9 @@
 *.token
 *.secret
 
+# PyCharm
+.idea
+
 # --------------------------------------
 
 # Byte-compiled / optimized / DLL files
