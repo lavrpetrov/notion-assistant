@@ -6,6 +6,7 @@ async def on_shutdown(dp):
 
 if __name__ == '__main__':
 	from aiogram import executor
-	from handlers import dp, send_to_admin
+	import handlers
 
-	executor.start_polling(dp, on_startup = send_to_admin,on_shutdown = on_shutdown, skip_updates=True)
+	executor.start_polling(handlers.dp, on_shutdown = on_shutdown, skip_updates=True)
+
