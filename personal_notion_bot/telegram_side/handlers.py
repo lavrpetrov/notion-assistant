@@ -1,6 +1,5 @@
 from loader import dp, bot
 from aiogram import types
-from config import ADMIN_ID
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.state import StatesGroup, State
@@ -11,10 +10,6 @@ import send_page
 class waiting(StatesGroup):
     waiting_for_name = State()
     waiting_for_content = State()
-
-
-async def send_to_admin(dp):
-    await bot.send_message(chat_id = ADMIN_ID, text ="Bot is working")
 
 
 @dp.message_handler(Command("new_page"), state = None)
@@ -33,12 +28,12 @@ async def name(message: types.Message, state:FSMContext):
 @dp.message_handler(state = waiting.waiting_for_content)
 async def content(message: types.Message, state:FSMContext):
     data = await state.get_data()
-    content = message.text 
+    content = message.text
     name = data.get("name")
-    
+
     send_page.func_send_page(name, content)
 
     await message.answer("Дело сделано!")
-	
+
     await state.finish()
 

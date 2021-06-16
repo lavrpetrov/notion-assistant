@@ -1,12 +1,14 @@
-from pathlib import Path
+import os
 
-path = '/home/roman/Programming/GitHub/notion-assistant/personal_notion_bot/secret/'
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 
-BOT_TOKEN = Path(path + 'telegram.token').read_text().strip()
+NOTION_TOKEN = os.getenv('NOTION_TOKEN')
 
-ADMIN_ID = Path(path + 'admin.id').read_text().strip()
+DATABASE_ID = os.getenv('DATABASE_ID')
 
-NOTION_TOKEN = Path(path + 'notion.token').read_text().strip()
-
-DATABASE_ID = Path(path + 'database.id').read_text().strip()
+HEADERS = {
+        'Authorization': f"Bearer {NOTION_TOKEN}",
+        'Content-Type': 'application/json',
+        'Notion-Version': '2021-05-13',
+}
 
