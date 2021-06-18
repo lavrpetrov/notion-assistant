@@ -2,7 +2,7 @@ import requests
 import json
 import sys; sys.path.append("..")
 
-from config import HEADERS, DATABASE_ID
+from config import HEADERS
 
 
 def get_id(url):
@@ -24,6 +24,26 @@ def get_database(database_id):
     return data
 
 
+def get_page(page_id):
+
+    response = requests.get("https://api.notion.com/v1/pages/" + f"{page_id}", headers=HEADERS)
+
+    data = json.loads(response.text)
+
+    return data
+
+
+def get_block(block_id):
+
+    response = requests.get("https://api.notion.com/v1/blocks/" + f"{block_id}/children?page_size=100", headers=HEADERS)
+
+    data = json.loads(response.text)
+
+    return data
+
+
+
+
 def get_columns_names(data):
     keys_list = list(data['properties'])
     return keys_list
@@ -36,9 +56,11 @@ def get_type_column(data, properti):
 
 def get_tags(data, properti):
     if get_type_column(data, properti) == "select":
-        pass
+        tags = data['properties'][properti]['select']['options']
+        return tags
     elif get_type_column(data, properti) == "multi_select":
-        pass
+        tags = data['properties'][properti]['select']['options']
+        return tags
     else:
         return "Sorry,\nThis type of column haven't got any tags."
 
@@ -47,36 +69,35 @@ def prepare_data_for_filling(data):
     for i in get_columns_names(data):
         if get_type_column(data, i) == "rich_text":
             data['properties'][i]['rich_text'].setdefault('content', '')
-        elif get_type_column(data, i) == "title":
-            data['properties'][i]['title'].setdefault('content', '')
-        elif get_type_column(data, i) == "multi_select":
-            data['properties'][i]['multi_select'].setdefault('options', [])
+
+
+def prepare_data_for_posting(data, database_id):
+    data_tmp1 = {'parent': {'type': 'database_id', 'database_id': ''}}
+    data_tmp1['parent']['database_id'] = database_id
+
+    data_tmp2 = {'properties': data['properties']}
+
+    data = data_tmp1 | data_tmp2
+
+    return data
+
+
+def set_page_name(data, page_name):
+    data['properties']['Name']['title'] = [{'type': 'text', 'text': {'content': page_name}}]
+
+
+def path_block_children(block_id):
+    pass
 
 
 
-data = {}
-
-data.setdefault("parent", {})
-data["parent"].setdefault("database_id", str(DATABASE_ID))
-data.setdefault("properties", {})
-data["properties"].setdefault("Name", {})
-data["properties"].setdefault("Content", {})
-data["properties"]["Name"].setdefault("title", [{"text": {"content": ''}}])
-data["properties"]["Content"].setdefault("rich_text", [{"text": {"content": ''}}])
 
 
-#def func_send_page(page_name, page_content):
-#	'''Функция пушит пейдж в конкретную базу данных в Notion.
-#
-#	Эта функция принимает 2 аргумента: название странички и её содержимое.
-#	'''
-#	data["properties"]["Name"]["title"][0]["text"]["content"] = str(page_name)
-#	data["properties"]["Content"]["rich_text"][0]["text"]["content"] = str(page_content)
-#
-#	data_json = json.dumps(data)
-#
-#	requests.post('https://api.notion.com/v1/pages', headers=HEADERS, data=data_json)
-#
+def post_page(data):
+	data_json = json.dumps(data)
+
+	requests.post('https://api.notion.com/v1/pages', headers=HEADERS, data=data_json)
+
 if __name__ == '__main__':
-	func_send_page("Test_Name", "TestTestTestTestTest")
+    func_send_page("Test_Name", "TestTestTestTestTest")
 

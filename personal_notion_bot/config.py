@@ -9,6 +9,6 @@ DATABASE_ID = os.getenv('DATABASE_ID')
 HEADERS = {
         'Authorization': f"Bearer {NOTION_TOKEN}",
         'Content-Type': 'application/json',
-        'Notion-Version': '2021-05-13',
+        'Notion-Version': '2021-05-13'
 }
 

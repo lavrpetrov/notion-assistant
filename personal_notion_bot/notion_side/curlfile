@@ -1,3 +1,0 @@
-curl 'https://api.notion.com/v1/databases/eb1505f59de444799a099bf99e84fd4e' \
--H 'Authorization: Bearer secret_iPHmdS3O4tq4GWxDvhEpmFnMXLUcSDgqv8AwrKB2kRa' \
--H 'Notion-Version: 2021-05-13'
