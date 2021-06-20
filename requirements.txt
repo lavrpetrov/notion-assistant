@@ -1,1 +1,4 @@
 aiogram
+
+requests~=2.25.0
+json~=0.1.1

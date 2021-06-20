@@ -2,6 +2,7 @@
 *.token
 *.secret
 *.id
+*.sh
 secret/
 
 # PyCharm

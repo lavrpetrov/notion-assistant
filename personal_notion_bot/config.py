@@ -12,3 +12,4 @@ HEADERS = {
         'Notion-Version': '2021-05-13'
 }
 
+data_post = {'parent': {'database_id': ''}, 'properties': {}, 'children': []}
