@@ -1,6 +1,12 @@
 # secrets
 *.token
 *.secret
+*.id
+*.sh
+secret/
+
+# PyCharm
+.idea
 
 # --------------------------------------
 
@@ -133,3 +139,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
